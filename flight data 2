@@ -1,0 +1,29 @@
+from flask import Flask, request, jsonify
+import psycopg2
+
+app = Flask(__name__)
+
+conn = psycopg2.connect(
+    dbname="flight_status_db",
+    user="yourusername",
+    password="yourpassword",
+    host="localhost"
+)
+cursor = conn.cursor()
+
+@app.route('/api/flights', methods=['GET'])
+def get_flights():
+    cursor.execute("SELECT * FROM flights;")
+    flights = cursor.fetchall()
+    return jsonify(flights)
+
+@app.route('/api/flights', methods=['POST'])
+def add_flight():
+    data = request.json
+    cursor.execute("INSERT INTO flights (flight_number, status, gate, departure_time) VALUES (%s, %s, %s, %s)",
+                   (data['flight_number'], data['status'], data['gate'], data['departure_time']))
+    conn.commit()
+    return jsonify({"message": "Flight added successfully!"})
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,14 @@
+@app.route('/api/users', methods=['POST'])
+def add_user():
+    data = request.json
+    cursor.execute("INSERT INTO users (email, phone) VALUES (%s, %s)", (data['email'], data['phone']))
+    conn.commit()
+    return jsonify({"message": "User added successfully!"})
+
+@app.route('/api/notifications', methods=['POST'])
+def add_notification():
+    data = request.json
+    cursor.execute("INSERT INTO notifications (user_id, flight_id, notification_type) VALUES (%s, %s, %s)",
+                   (data['user_id'], data['flight_id'], data['notification_type']))
+    conn.commit()
+    return jsonify({"message": "Notification added successfully!"})

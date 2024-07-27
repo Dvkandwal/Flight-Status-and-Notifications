@@ -1,0 +1,32 @@
+<table id="flight-table">
+    <tr>
+      <th>Flight</th>
+      <th>Status</th>
+      <th>Gate</th>
+    </tr>
+    
+  </table>
+  
+  <script>
+    const flightTable = document.getElementById('flight-table');
+    
+    function updateFlights() {
+      fetch('/api/flights')
+        .then(response => response.json())
+        .then(data => {
+          
+          flightTable.innerHTML = '<tr><th>Flight</th><th>Status</th><th>Gate</th></tr>';
+          
+          
+          data.forEach(flight => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${flight.number}</td><td>${flight.status}</td><td>${flight.gate}</td>`;
+            flightTable.appendChild(row);
+          });
+        });
+    }
+    
+    
+    setInterval(updateFlights, 30000);
+  </script>
+  

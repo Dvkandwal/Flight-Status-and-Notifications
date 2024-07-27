@@ -1,0 +1,16 @@
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+mock_flights = [
+    {"number": "AA123", "status": "On Time", "gate": "A1"},
+    {"number": "BA456", "status": "Delayed", "gate": "B2"},
+    # More mock data...
+]
+
+@app.route('/api/flights', methods=['GET'])
+def get_flights():
+    return jsonify(mock_flights)
+
+if __name__ == '__main__':
+    app.run(debug=True)

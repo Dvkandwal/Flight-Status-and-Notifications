@@ -1,0 +1,14 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/api/subscribe', methods=['POST'])
+def subscribe():
+    data = request.json
+    email = data.get('email')
+    phone = data.get('phone')
+    # Process and store subscription data...
+    return jsonify({"message": "Subscribed successfully!"})
+
+if __name__ == '__main__':
+    app.run(debug=True)

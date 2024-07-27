@@ -1,0 +1,24 @@
+CREATE DATABASE flight_status_db;
+
+\c flight_status_db
+
+CREATE TABLE flights (
+    flight_id SERIAL PRIMARY KEY,
+    flight_number VARCHAR(10),
+    status VARCHAR(20),
+    gate VARCHAR(5),
+    departure_time TIMESTAMP
+);
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    email VARCHAR(100),
+    phone VARCHAR(15)
+);
+
+CREATE TABLE notifications (
+    notification_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    flight_id INT REFERENCES flights(flight_id),
+    notification_type VARCHAR(10)  -- 'email' or 'sms'
+);

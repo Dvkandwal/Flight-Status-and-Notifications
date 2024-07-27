@@ -1,0 +1,7 @@
+fetch('/api/flights')
+  .then(response => response.json())
+  .then(data => {
+    // Populate the HTML table with flight data
+  });
+
+  
